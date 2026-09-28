@@ -8,6 +8,22 @@ class RandomQuote {
     const { id, text, author } = quotes[randomIndex];
     return new Quote(id, text, author);
   }
+  static getRandomQuoteViaAPI() {
+    // const url = "https://apis-cloud.net/quotes/random";
+    const url = "https://dummyjson.com/quotes/random";
+    const options = { headers: { "Content-Type": "application/json" } };
+
+    return fetch(url, options)
+      .then((response) => response.json())
+      .then((quote) => {
+        const id = quote.id;
+        const text = quote.quote;
+        const author = quote.author;
+
+        return new Quote(id, text, author);
+      })
+      .catch((error) => console.error(error));
+  }
 }
 
 export default RandomQuote;
